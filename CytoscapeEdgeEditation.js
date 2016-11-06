@@ -121,9 +121,9 @@
 
     scope.CytoscapeEdgeEditation = Class({
 
-        init: function (cy) {
+        init: function (cy, handleSize) {
             this.DOUBLE_CLICK_INTERVAL = 300;
-            this.HANDLE_SIZE = 5;
+            this.HANDLE_SIZE = handleSize? handleSize: 5;
             this.ARROW_END_ID = "ARROW_END_ID";
 
             this._handles = {};
