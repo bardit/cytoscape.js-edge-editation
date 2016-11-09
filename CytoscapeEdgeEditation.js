@@ -267,7 +267,8 @@
                 data: {
                     id: "edge",
                     source: fromNode.id(),
-                    target: toNode.id()
+                    target: toNode.id(),
+                    type: 'temporary-link'
                 },
                 css: $.extend(
                     this._getEdgeCSSByHandle(handle),
@@ -310,8 +311,17 @@
                         if (listeners[i].type === 'addedgemouseup') {
                             this._cy.trigger('addedgemouseup', {
                                 source: this._dragging,
-                                target: this._hover
+                                target: this._hover,
+                                edge: this._edge
                             });
+                            var that = this;
+                            setTimeout(function () {
+                               that._dragging = false;
+                               that._clearArrow();
+                                that._hit = null;
+                            }, 0);
+
+
                             return;
                         }
                     }
