@@ -125,7 +125,7 @@
 
         init: function (cy, handleSize) {
             this.DOUBLE_CLICK_INTERVAL = 300;
-            this.HANDLE_SIZE = handleSize? handleSize: 5;
+            this.HANDLE_SIZE = handleSize ? handleSize : 5;
             this.ARROW_END_ID = "ARROW_END_ID";
 
             this._handles = {};
@@ -241,12 +241,20 @@
             var position = this._getHandlePosition(handle, target);
 
             this._ctx.beginPath();
-            this._ctx.arc(position.x, position.y, this.HANDLE_SIZE, 0, 2 * Math.PI, false);
-            this._ctx.fillStyle = handle.color;
-            this._ctx.strokeStyle = "white";
-            this._ctx.lineWidth = 2;
-            this._ctx.fill();
-            this._ctx.stroke();
+
+            if(handle.imageUrl) {
+                var base_image = new Image();
+                base_image.src = handle.imageUrl;
+                this._ctx.drawImage(base_image, position.x, position.y, this.HANDLE_SIZE, this.HANDLE_SIZE);
+            } else {
+                this._ctx.arc(position.x, position.y, this.HANDLE_SIZE, 0, 2 * Math.PI, false);
+                this._ctx.fillStyle = handle.color;
+                this._ctx.strokeStyle = "white";
+                this._ctx.lineWidth = 0;
+                this._ctx.fill();
+                this._ctx.stroke();
+            }
+
         },
         _drawArrow: function (fromNode, toPosition, handle) {
             var toNode;
@@ -444,7 +452,9 @@
                     break;
             }
 
-            return {x: xpos, y: ypos};
+            var offsetX = handle.offsetX ? handle.offsetX : 0;
+            var offsetY = handle.offsetY ? handle.offsetY : 0;
+            return {x: xpos + offsetX, y: ypos + offsetY};
         },
         _getEdgeCSSByHandle: function (handle) {
             var color = handle.lineColor ? handle.lineColor : handle.color;
