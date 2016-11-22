@@ -140,6 +140,10 @@
             this._cy.on('mouseout', 'node', this._mouseOut.bind(this));
 
             this._$container.on('mouseout', function (e) {
+                if(this.permanentHandle){
+                    return;
+                }
+
                 this._clear();
             }.bind(this));
 
@@ -162,7 +166,17 @@
             this._cy.on("remove", "node", function () {
                 this._hover = false;
                 this._clear();
-            }.bind(this))
+            }.bind(this));
+
+            this._cy.on('showhandle', function(cy, target){
+                this.permanentHandle = true;
+                this._showHandles(target);
+            }.bind(this));
+
+            this._cy.on('hidehandles', function(){
+                this.permanentHandle = false;
+                this._clear();
+            }.bind(this));
 
             this._cy.bind('zoom pan', this._redraw.bind(this));
 
@@ -324,8 +338,8 @@
                             });
                             var that = this;
                             setTimeout(function () {
-                               that._dragging = false;
-                               that._clearArrow();
+                                that._dragging = false;
+                                that._clearArrow();
                                 that._hit = null;
                             }, 0);
 
@@ -382,7 +396,11 @@
                 this._showHandles(this._hover);
             }
         },
-        _mouseOut: function () {
+        _mouseOut: function (e) {
+            if(this.permanentHandle){
+                return;
+            }
+
             this._clear();
             this._hover = null;
         },
