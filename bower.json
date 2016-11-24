@@ -1,0 +1,16 @@
+{
+  "name": "cytoscape.js-edge-editation",
+  "homepage": "https://github.com/bardit/cytoscape.js-edge-editation",
+  "authors": [
+    "Orit Barda"
+  ],
+  "description": "",
+  "main": "./CytoscapeEdgeEditation.js",
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
