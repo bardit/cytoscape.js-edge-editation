@@ -324,6 +324,10 @@
         _hideHandles: function () {
             this.permanentHandle = false;
             this._clear();
+
+            if(this._hover){
+                this._showHandles(this._hover);
+            }
         },
         _mouseUp: function () {
             if (this._hover) {
