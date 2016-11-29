@@ -140,7 +140,7 @@
             this._cy.on('mouseout', 'node', this._mouseOut.bind(this));
 
             this._$container.on('mouseout', function (e) {
-                if(this.permanentHandle){
+                if (this.permanentHandle) {
                     return;
                 }
 
@@ -168,15 +168,12 @@
                 this._clear();
             }.bind(this));
 
-            this._cy.on('showhandle', function(cy, target){
+            this._cy.on('showhandle', function (cy, target) {
                 this.permanentHandle = true;
                 this._showHandles(target);
             }.bind(this));
 
-            this._cy.on('hidehandles', function(){
-                this.permanentHandle = false;
-                this._clear();
-            }.bind(this));
+            this._cy.on('hidehandles', this._hideHandles.bind(this));
 
             this._cy.bind('zoom pan', this._redraw.bind(this));
 
@@ -256,7 +253,7 @@
 
             this._ctx.beginPath();
 
-            if(handle.imageUrl) {
+            if (handle.imageUrl) {
                 var base_image = new Image();
                 base_image.src = handle.imageUrl;
                 this._ctx.drawImage(base_image, position.x, position.y, this.HANDLE_SIZE, this.HANDLE_SIZE);
@@ -324,6 +321,10 @@
                 e.stopImmediatePropagation();
             }
         },
+        _hideHandles: function () {
+            this.permanentHandle = false;
+            this._clear();
+        },
         _mouseUp: function () {
             if (this._hover) {
                 if (this._hit) {
@@ -369,8 +370,14 @@
             if (this._hover) {
                 var hit = this._hitTestHandles(e);
                 if (hit) {
+                    this._cy.trigger('handlemouseover', {
+                        node: this._hover
+                    });
                     $("body").css("cursor", "pointer");
                 } else {
+                    this._cy.trigger('handlemouseout', {
+                        node: this._hover
+                    });
                     $("body").css("cursor", "inherit");
                 }
             } else {
@@ -397,7 +404,7 @@
             }
         },
         _mouseOut: function (e) {
-            if(this.permanentHandle){
+            if (this.permanentHandle) {
                 return;
             }
 
