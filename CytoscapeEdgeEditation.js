@@ -287,7 +287,7 @@
                     id: "edge",
                     source: fromNode.id(),
                     target: toNode.id(),
-                    type: 'temporary-link'
+                    classes: 'temporary-link'
                 },
                 css: $.extend(
                     this._getEdgeCSSByHandle(handle),
