@@ -290,7 +290,7 @@
                     classes: 'temporary-link'
                 },
                 css: $.extend(
-                    this._getEdgeCSSByHandle(handle),
+             //       this._getEdgeCSSByHandle(handle),
                     {opacity: 0.5}
                 )
             });
