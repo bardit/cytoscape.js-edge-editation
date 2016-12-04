@@ -486,12 +486,12 @@
         },
         _getEdgeCSSByHandle: function (handle) {
             var color = handle.lineColor ? handle.lineColor : handle.color;
-            var width = handle.width? handle.width : 3;
+            var lineWidth = handle.lineWidth? handle.lineWidth : 3;
             var lineStyle = handle.lineStyle ? handle.lineStyle: 'solid';
             return {
                 "line-color": color,
                 "target-arrow-color": color,
-                'width': width,
+                'width': lineWidth,
                 'line-style': lineStyle
             };
         },
