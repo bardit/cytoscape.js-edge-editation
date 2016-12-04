@@ -286,12 +286,11 @@
                 data: {
                     id: "edge",
                     source: fromNode.id(),
-                    target: toNode.id(),
-                    classes: 'temporary-link'
+                    target: toNode.id()
                 },
                 css: $.extend(
                     this._getEdgeCSSByHandle(handle),
-                    {opacity: 0.5}
+                    {opacity: 1}
                 )
             });
 
@@ -487,9 +486,13 @@
         },
         _getEdgeCSSByHandle: function (handle) {
             var color = handle.lineColor ? handle.lineColor : handle.color;
+            var width = handle.width? handle.width : 3;
+            var lineStyle = handle.lineStyle ? handle.lineStyle: 'solid';
             return {
                 "line-color": color,
-                "target-arrow-color": color
+                "target-arrow-color": color,
+                'width': width,
+                'line-style': lineStyle
             };
         },
         _getHandleByType: function (type) {
